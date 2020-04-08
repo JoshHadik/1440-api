@@ -1,7 +1,7 @@
 RSpec.describe "REQUEST: Create activity log (POST /activity_logs)", type: :request do
 
   simulation(:create_activity_log) do |with:|
-    post activity_logs_path, params: { activity_log: with }
+    post activity_logs_path, params: { activity_log: with }, headers: { "ACCEPT" => "application/json" }
     reload_user if signed_in_user
   end
 
@@ -18,9 +18,9 @@ RSpec.describe "REQUEST: Create activity log (POST /activity_logs)", type: :requ
       expect_simulation(:create_activity_log, with: valid_attributes).to_not create_a_new(ActivityLog)
     end
 
-    it 'returns a status code of 422' do
+    it 'returns a status code of 401' do
       simulate(:create_activity_log, with: valid_attributes)
-      expect(response.status).to eq(422)
+      expect(response.status).to eq(401)
     end
   end
 

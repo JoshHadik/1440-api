@@ -1,5 +1,5 @@
 class ActivityLogsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user!
   before_action :only_allow_owner!, only: [
     :show, :update, :destroy
   ]
@@ -52,7 +52,7 @@ class ActivityLogsController < ApplicationController
 
     def only_allow_owner!
       unless current_activity_log.user == current_user
-        render :json, status: :unprocessable_entity
+        render :json, status: :unauthorized
       end
     end
 

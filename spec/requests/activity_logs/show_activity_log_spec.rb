@@ -1,7 +1,7 @@
 RSpec.describe "REQUEST: Show activity log (GET /activity_logs/:id)", type: :request do
 
   simulation(:show_activity_log) do |with:{}|
-    get activity_log_path(with)
+    get activity_log_path(with), headers: { "ACCEPT" => "application/json" }
   end
 
   let(:random_activity_log) do
@@ -14,9 +14,9 @@ RSpec.describe "REQUEST: Show activity log (GET /activity_logs/:id)", type: :req
       expect(response.body).to_not include(random_activity_log.to_json)
     end
 
-    it 'returns a status code of 422' do
+    it 'returns a status code of 401' do
       simulate(:show_activity_log, with: random_activity_log)
-      expect(response.status).to eq(422)
+      expect(response.status).to eq(401)
     end
   end
 
@@ -35,9 +35,9 @@ RSpec.describe "REQUEST: Show activity log (GET /activity_logs/:id)", type: :req
         expect(response.body).to_not include(random_activity_log.to_json)
       end
 
-      it 'returns a status code of 422' do
+      it 'returns a status code of 401' do
         simulate(:show_activity_log, with: random_activity_log)
-        expect(response.status).to eq(422)
+        expect(response.status).to eq(401)
       end
     end
 
