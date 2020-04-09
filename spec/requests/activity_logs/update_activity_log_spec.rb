@@ -2,7 +2,9 @@ RSpec.describe "REQUEST: Update activity log (PUT/PATCH /activity_logs/:id)", ty
   let(:activity_log) { FactoryBot.create(:activity_log) }
 
   simulation(:update_activity_log) do |with:{}|
-    put activity_log_path(activity_log), params: { activity_log: with }, headers: { "ACCEPT" => "application/json" }
+    json_request :put, activity_log_path(activity_log), params: {
+      activity_log: with
+    }
     reload_user if signed_in_user
   end
 

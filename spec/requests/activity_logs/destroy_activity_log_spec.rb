@@ -1,6 +1,6 @@
 RSpec.describe "REQUEST: Destroy activity log (DELETE /activity_logs/:id)", type: :request do
   simulation(:destroy_activity_log) do
-    delete activity_log_path(activity_log), headers: { "ACCEPT" => "application/json" }
+    json_request :delete, activity_log_path(activity_log)
     reload_user if signed_in_user
   end
 

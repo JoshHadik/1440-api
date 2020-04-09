@@ -4,6 +4,21 @@ RSpec.shared_context "request context", :shared_context => :metadata do
     JSON.parse(response.body)
   end
 
+  def json_request(method, path, *args, **opts, &block)
+    opts[:params] = opts[:params].to_json
+    opts[:headers] = {
+      "ACCEPT" => "application/json",
+      "CONTENT_TYPE" => "application/json"
+    }
+
+    send(method, path, *args, **opts, &block)
+  end
+
+  # before(:each) do
+  #   binding.pry
+  #   request.accept = "application/json"
+  # end
+
   #### Devise / Auth ####
 
   include Devise::Test::IntegrationHelpers

@@ -1,7 +1,7 @@
 RSpec.describe "REQUEST: Show activity log (GET /activity_logs/:id)", type: :request do
 
   simulation(:show_activity_log) do |with:{}|
-    get activity_log_path(with), headers: { "ACCEPT" => "application/json" }
+    json_request :get, activity_log_path(with)
   end
 
   let(:random_activity_log) do

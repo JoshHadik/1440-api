@@ -1,7 +1,9 @@
 RSpec.describe "REQUEST: Create activity log (POST /activity_logs)", type: :request do
 
   simulation(:create_activity_log) do |with:|
-    post activity_logs_path, params: { activity_log: with }, headers: { "ACCEPT" => "application/json" }
+    json_request :post, activity_logs_path, params: {
+      activity_log: with
+    }
     reload_user if signed_in_user
   end
 
