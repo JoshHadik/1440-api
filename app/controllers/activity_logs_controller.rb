@@ -7,11 +7,17 @@ class ActivityLogsController < ApplicationController
 
 
   # GET /activity_logs
-  def index
-    @activity_logs = ActivityLog.all
-
-    render json: @activity_logs
-  end
+  # def index
+  #   if params[:date]
+  #     datetime = DateTime.parse(params[:date])
+  #   else
+  #     datetime = DateTime.now
+  #   end
+  #
+  #   @activity_logs = ActivityLog.all.where()
+  #
+  #   render json: @activity_logs
+  # end
 
   # GET /activity_logs/1
   def show
@@ -20,13 +26,13 @@ class ActivityLogsController < ApplicationController
 
   # POST /activity_logs
   def create
-    new_activity_log = ActivityLog.new(activity_log_params)
-    new_activity_log.user = current_user if current_user
+    @activity_log = ActivityLog.new(activity_log_params)
+    @activity_log.user = current_user if current_user
 
-    if new_activity_log.save
-      render json: new_activity_log, status: :created, location: new_activity_log
+    if @activity_log.save
+      render json: @activity_log, status: :created, location: @activity_log
     else
-      render json: new_activity_log.errors, status: :unprocessable_entity
+      render json: @activity_log.errors, status: :unprocessable_entity
     end
   end
 
@@ -58,9 +64,5 @@ class ActivityLogsController < ApplicationController
 
     def current_activity_log
       @activity_log ||= ActivityLog.find(params[:id])
-    end
-
-    def new_activity_log(with: {})
-      @activity_log ||= ActivityLog.new(with)
     end
 end
