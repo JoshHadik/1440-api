@@ -1,7 +1,7 @@
 RSpec.describe "REQUEST: Show activity log (GET /activity_logs/:id)", type: :request do
 
   simulation(:show_day) do |date:|
-    json_request :get, day_path(date)
+    json_request :get, day_path(date.to_s)
   end
 
   let(:today) do
