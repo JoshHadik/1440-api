@@ -1,15 +1,19 @@
 FactoryBot.define do
   factory :activity_log do
+    transient do
+      date { Date.today }
+    end
+
     user do
       FactoryBot.build(:user)
     end
 
     started_at do
-      Time.zone.parse(Faker::Time.between(from: DateTime.now - 1, to: DateTime.now).to_s)
+      Time.zone.parse(Faker::Time.between(from: date.to_datetime, to: date.to_datetime.change(hour: 12)).to_s)
     end
 
     ended_at do
-      Time.zone.parse(Faker::Time.between(from: started_at, to: DateTime.now).to_s)
+      Time.zone.parse(Faker::Time.between(from: started_at, to: date.to_datetime.change(hour: 23, min: 59)).to_s)
     end
 
     label do

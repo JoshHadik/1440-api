@@ -5,7 +5,7 @@ RSpec.describe "REQUEST: Show activity log (GET /activity_logs/:id)", type: :req
   end
 
   let(:random_activity_log) do
-    FactoryBot.create(:activity_log, user: FactoryBot.create(:user))
+    FactoryBot.create(:activity_log)
   end
 
   context 'when the user is not signed in' do
