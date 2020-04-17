@@ -4,21 +4,6 @@ class ActivityLogsController < ApplicationController
     :show, :update, :destroy
   ]
 
-
-
-  # GET /activity_logs
-  # def index
-  #   if params[:date]
-  #     datetime = DateTime.parse(params[:date])
-  #   else
-  #     datetime = DateTime.now
-  #   end
-  #
-  #   @activity_logs = ActivityLog.all.where()
-  #
-  #   render json: @activity_logs
-  # end
-
   # GET /activity_logs/1
   def show
     render json: current_activity_log

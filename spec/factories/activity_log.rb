@@ -29,5 +29,15 @@ FactoryBot.define do
       ended_at { nil }
       label { nil }
     end
+
+    trait :started_at_greater_than_ended_at do
+      ended_at do
+        Time.zone.parse(Faker::Time.between(from: date.to_datetime, to: date.to_datetime.change(hour: 12)).to_s)
+      end
+
+      started_at do
+        Time.zone.parse(Faker::Time.between(from: ended_at, to: date.to_datetime.change(hour: 23, min: 59)).to_s)
+      end
+    end
   end
 end

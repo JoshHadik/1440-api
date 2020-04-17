@@ -18,15 +18,15 @@ RSpec.describe "REQUEST: Update activity log (PUT/PATCH /activity_logs/:id)", ty
 
 
   context 'when the user is not signed in' do
+    it 'returns a status code of 401' do
+      simulate(:update_activity_log, with: valid_attributes)
+      expect(response.status).to be(401)
+    end
+
     it 'does not update the activity log' do
       expect_simulation(:update_activity_log, with: valid_attributes).to_not change {
         activity_log.reload.updated_at.to_s
       }
-    end
-
-    it 'returns a status code of 401' do
-      simulate(:update_activity_log, with: valid_attributes)
-      expect(response.status).to be(401)
     end
   end
 
@@ -36,15 +36,15 @@ RSpec.describe "REQUEST: Update activity log (PUT/PATCH /activity_logs/:id)", ty
     end
 
     context 'and tries to update an activity log they do not own' do
+      it 'returns a status code of 401' do
+        simulate(:update_activity_log, with: valid_attributes)
+        expect(response.status).to be(401)
+      end
+
       it 'does not update the activity log' do
         expect_simulation(:update_activity_log, with: valid_attributes).to_not change {
           activity_log.reload.updated_at.to_s
         }
-      end
-
-      it 'returns a status code of 401' do
-        simulate(:update_activity_log, with: valid_attributes)
-        expect(response.status).to be(401)
       end
     end
 
@@ -54,27 +54,27 @@ RSpec.describe "REQUEST: Update activity log (PUT/PATCH /activity_logs/:id)", ty
       end
 
       context 'with invalid attributes' do
+        it 'returns a status code of 422' do
+          simulate(:update_activity_log, with: invalid_attributes)
+          expect(response.status).to be(422)
+        end
+
         it 'does not update the activity log' do
           expect_simulation(:update_activity_log, with: invalid_attributes).to_not change {
             activity_log.reload.updated_at.to_s
           }
         end
-
-        it 'returns a status code of 422' do
-          simulate(:update_activity_log, with: invalid_attributes)
-          expect(response.status).to be(422)
-        end
       end
 
       context 'with valid attributes' do
-        it 'updates the activity log' do
-          simulate(:update_activity_log, with: valid_attributes)
-          expect(activity_log.reload).to match_attributes(valid_attributes)
-        end
-
         it 'returns a status code of 200' do
           simulate(:update_activity_log, with: valid_attributes)
           expect(response.status).to be(200)
+        end
+        
+        it 'updates the activity log' do
+          simulate(:update_activity_log, with: valid_attributes)
+          expect(activity_log.reload).to match_attributes(valid_attributes)
         end
       end
     end
